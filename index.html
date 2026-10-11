@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cars.co.za Answers — Q&amp;A Hub Mock-up (v2)</title>
+<style>
+  :root{
+    --brand:#E3242B;
+    --brand-dark:#B81B21;
+    --brand-tint:#FDECEC;
+    --navy:#0E1A2B;
+    --navy-2:#16263D;
+    --navy-tint:#EEF2F7;
+    --ink:#0F172A;
+    --ink-2:#475569;
+    --muted:#7A8798;
+    --line:#E2E8F0;
+    --line-2:#F1F5F9;
+    --bg:#F6F8FB;
+    --white:#fff;
+    --ok:#0F7A52;
+    --ok-tint:#E8F5EF;
+    --note:#0E7490;
+    --note-tint:#E6F6F8;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.05), 0 8px 24px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+  /* ---------- chrome ---------- */
+  .topbar{background:var(--navy);color:#CBD5E1;font-size:12.5px}
+  .topbar .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:7px 24px}
+  .topbar .left{display:flex;gap:18px}
+  .masthead{background:var(--white);border-bottom:1px solid var(--line)}
+  .masthead .wrap{display:flex;align-items:center;gap:30px;padding:14px 24px}
+  .logo{display:flex;align-items:baseline;gap:1px;flex:0 0 auto;font-weight:800;letter-spacing:-.5px}
+  .logo .wm{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:30px;color:var(--brand)}
+  .logo .tld{font-size:14px;color:var(--brand);font-style:italic}
+  .nav{display:flex;gap:22px;font-size:14px;font-weight:600;color:var(--ink-2);flex-wrap:wrap;flex:1}
+  .nav a:hover{color:var(--brand)}
+  .nav a.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--brand);padding-bottom:3px}
+  .mast-cta{display:flex;gap:10px}
+  .btn-ghost{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-weight:700;font-size:13px;color:var(--ink)}
+  .btn-red{background:var(--brand);border:0;border-radius:9px;padding:9px 15px;font-weight:700;font-size:13px;color:#fff}
+
+  /* ---------- annotation system ---------- */
+  .anno{display:none}
+  body.show-anno .anno{display:block}
+  .anno-inline{display:none}
+  .anno{
+    background:var(--note-tint);border:1px dashed #7DD3DF;border-radius:10px;
+    padding:10px 13px;font-size:12.5px;color:#164E63;margin:12px 0;line-height:1.5;
+  }
+  .anno b{color:#0C3B4A}
+  .anno code{background:#fff;border:1px solid #BAE6EE;border-radius:4px;padding:1px 5px;font-size:11.5px}
+  .anno-inline{
+    align-items:center;gap:5px;background:var(--note-tint);border:1px dashed #7DD3DF;
+    color:var(--note);font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;
+    white-space:nowrap;letter-spacing:.2px;
+  }
+  .toggle-bar{position:sticky;top:0;z-index:50;background:#020617;color:#fff;font-size:13px;padding:9px 0}
+  .toggle-bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .toggle-bar .tag{font-weight:700;letter-spacing:.3px}
+  .toggle-bar .tag em{font-style:normal;color:#94A3B8;font-weight:500}
+  .toggle-bar .tag .v{color:#FCA5A5}
+  .switches{display:flex;gap:8px;flex-wrap:wrap}
+  .switch{
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;
+    border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:600;transition:.15s;
+  }
+  .switch:hover{background:rgba(255,255,255,.2)}
+  .switch.on{background:#fff;color:var(--ink);border-color:#fff}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:radial-gradient(900px 380px at 85% 0%,rgba(227,36,43,.32),transparent 60%),linear-gradient(160deg,var(--navy-2) 0%,var(--navy) 100%);
+    color:#fff;padding:46px 0 40px
+  }
+  .hero .eyebrow{font-size:12px;font-weight:800;letter-spacing:1.6px;color:#FCA5A5;margin-bottom:10px}
+  .hero h1{margin:0 0 12px;font-size:40px;line-height:1.1;letter-spacing:-1px;font-weight:800;max-width:640px}
+  .hero p{margin:0;max-width:600px;color:#BFCBDA;font-size:16px}
+  .searchbox{
+    margin-top:24px;max-width:640px;background:#fff;border-radius:12px;display:flex;
+    align-items:center;padding:6px 6px 6px 16px;box-shadow:0 10px 30px rgba(2,6,23,.35)
+  }
+  .searchbox input{flex:1;border:0;outline:0;font-size:15px;padding:11px 0;color:var(--ink)}
+  .searchbox button{background:var(--brand);color:#fff;border:0;border-radius:9px;padding:11px 20px;font-weight:700;font-size:14px}
+  .stats{display:flex;gap:38px;margin-top:28px;flex-wrap:wrap}
+  .stats b{display:block;font-size:24px;letter-spacing:-.5px}
+  .stats span{font-size:12.5px;color:#93A3B8}
+  .crumbs{font-size:12.5px;color:var(--muted);padding:16px 0 0}
+  .crumbs a{color:var(--brand);font-weight:600}
+
+  /* ---------- layout ---------- */
+  main{padding:0 0 70px}
+  .section-head{display:flex;align-items:baseline;gap:12px;margin:38px 0 14px;flex-wrap:wrap}
+  .section-head h2{margin:0;font-size:21px;letter-spacing:-.3px}
+  .section-head .count{font-size:12.5px;color:var(--muted)}
+  .rule{height:1px;background:var(--line);margin:0 0 18px}
+
+  .cat-nav{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 4px}
+  .cat-pill{
+    background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;
+    font-size:13px;font-weight:600;color:var(--ink-2);transition:.15s
+  }
+  .cat-pill:hover{border-color:var(--brand);color:var(--brand)}
+  .cat-pill.on{background:var(--navy);border-color:var(--navy);color:#fff}
+
+  /* ---------- in-depth guide cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+  .qcard{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+    display:flex;flex-direction:column;gap:11px;transition:.16s;box-shadow:var(--shadow);cursor:pointer;
+    border-top:3px solid var(--brand);
+  }
+  .qcard:hover{border-color:var(--brand);transform:translateY(-2px)}
+  .qcard h3{margin:0;font-size:16.5px;line-height:1.35;letter-spacing:-.2px}
+  .qcard p{margin:0;font-size:13.5px;color:var(--ink-2)}
+  .qcard .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+  .qcard .go{color:var(--brand);font-weight:700;font-size:13px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:11px;font-weight:600;border-radius:999px;padding:3px 9px;letter-spacing:.2px;background:var(--line-2);color:var(--ink-2)}
+  .chip.cat{background:var(--navy-tint);color:var(--navy-2)}
+  .chip.stock{background:var(--brand-tint);color:var(--brand-dark)}
+
+  /* ---------- quick answers ---------- */
+  .faq{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .faq-item + .faq-item{border-top:1px solid var(--line-2)}
+  .faq-item{scroll-margin-top:60px}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:0;padding:16px 20px;display:flex;
+    align-items:center;gap:14px;justify-content:space-between;color:var(--ink)
+  }
+  .faq-q h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.4}
+  .faq-q .meta{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.3px;margin-top:3px}
+  .faq-q:hover{background:#FBFCFE}
+  .faq-q .ic{
+    flex:0 0 22px;height:22px;border-radius:50%;background:var(--brand-tint);color:var(--brand);
+    display:grid;place-items:center;font-size:14px;font-weight:700;transition:.2s
+  }
+  .faq-item.open .faq-q .ic{background:var(--brand);color:#fff;transform:rotate(45deg)}
+  .faq-item.flash{animation:flash 1.6s ease}
+  @keyframes flash{0%{background:#FFF4D6}100%{background:#fff}}
+  .faq-a{display:none;padding:0 20px 20px 20px;font-size:14.5px;color:var(--ink-2);max-width:840px}
+  .faq-item.open .faq-a{display:block}
+  .faq-a p{margin:0 0 10px}
+  .faq-a .deep{display:inline-block;font-size:13px;color:var(--brand);font-weight:700;margin-top:2px}
+
+  /* ---------- guide page ---------- */
+  .detail{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:start;margin-top:8px}
+  .detail h1{font-size:32px;line-height:1.22;letter-spacing:-.7px;margin:8px 0 14px}
+  .byline{font-size:12.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+  .byline .dot{width:3px;height:3px;border-radius:50%;background:#CBD5E1}
+  .quickans{background:var(--ok-tint);border-left:4px solid var(--ok);border-radius:0 12px 12px 0;padding:18px 22px;margin:0 0 26px}
+  .quickans .lbl{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--ok);margin-bottom:6px}
+  .quickans p{margin:0;font-size:16px;color:#123}
+  .body h2{font-size:20px;letter-spacing:-.3px;margin:30px 0 10px;scroll-margin-top:60px}
+  .body p{margin:0 0 14px;font-size:15.5px;color:#25313F}
+  .body ul{margin:0 0 16px;padding-left:20px;font-size:15.5px;color:#25313F}
+  .body li{margin-bottom:7px}
+  .body .fine{font-size:12.5px;color:var(--muted);margin-top:-8px}
+  table.spec{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 20px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  table.spec th{background:var(--navy-tint);color:var(--navy-2);text-align:left;padding:10px 14px;font-size:12px;letter-spacing:.3px;text-transform:uppercase}
+  table.spec td{padding:10px 14px;border-top:1px solid var(--line-2);color:var(--ink-2)}
+  table.spec td:first-child{font-weight:600;color:var(--ink)}
+
+  /* ---------- car shelf ---------- */
+  .module{margin:34px 0 0}
+  .module-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .module-head h2{margin:0;font-size:19px;letter-spacing:-.3px}
+  .module-head .sub{font-size:12.5px;color:var(--muted)}
+  .cars{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .car{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:.16s}
+  .car:hover{border-color:var(--brand);box-shadow:var(--shadow)}
+  .thumb{
+    height:118px;background:linear-gradient(135deg,#E9EEF5,#D7DFEA);
+    display:grid;place-items:center;color:#8A9AB0;font-size:11px;font-weight:700;letter-spacing:.5px
+  }
+  .car .in{padding:12px 13px 13px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .car .name{font-size:13.5px;font-weight:700;line-height:1.35;min-height:36px}
+  .car .meta{font-size:12px;color:var(--muted)}
+  .car .price{font-size:17px;font-weight:800;color:var(--ink);margin-top:auto}
+  .car .pm{font-size:11.5px;color:var(--ink-2);font-weight:500}
+  .car .cta{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;width:100%;margin-top:4px}
+  .src{font-size:10.5px;font-weight:600;letter-spacing:.2px;border-radius:5px;padding:2px 6px;display:inline-block;background:#FEF3C7;color:#92400E;width:max-content}
+  .tool{background:linear-gradient(135deg,var(--navy-2),var(--navy));color:#fff;border-radius:var(--radius);padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+  .tool h3{margin:0 0 6px;font-size:18px}
+  .tool p{margin:0;color:#BFCBDA;font-size:14px;max-width:560px}
+  .tool .fields{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .tool .fields span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 12px;font-size:13px;color:#E2E8F0}
+
+  /* ---------- related ---------- */
+  .rq{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+  .rq a{
+    background:#fff;border:1px solid var(--line);border-radius:11px;padding:15px 17px;
+    font-size:14.2px;font-weight:600;display:flex;justify-content:space-between;gap:12px;
+    align-items:center;transition:.15s;line-height:1.35
+  }
+  .rq a:hover{border-color:var(--brand);color:var(--brand)}
+  .rq .arrow{color:var(--brand);font-weight:800;flex:0 0 auto}
+
+  /* ---------- sidebar ---------- */
+  aside{position:sticky;top:56px}
+  aside .box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}
+  aside h4{margin:0 0 12px;font-size:12.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+  aside .toc a{display:block;font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line-2);color:var(--ink-2);line-height:1.4}
+  aside .toc a:last-child{border-bottom:0}
+  aside .toc a:hover{color:var(--brand)}
+  .helpbox{background:var(--navy) !important;color:#fff;border:0 !important}
+  .helpbox h4{color:#FCA5A5}
+  .helpbox p{margin:0 0 14px;font-size:13.5px;color:#CBD5E1}
+  .helpbox button{width:100%;background:var(--brand);color:#fff;border:0;border-radius:9px;padding:10px;font-weight:700;font-size:13.5px}
+
+  /* ---------- strategy panel ---------- */
+  .strategy{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-top:44px;box-shadow:var(--shadow)}
+  .strategy h2{margin:0 0 6px;font-size:21px;letter-spacing:-.4px}
+  .strategy h3.sub{margin:26px 0 10px;font-size:15px}
+  .strategy .lead{color:var(--ink-2);font-size:14.5px;margin:0 0 22px;max-width:800px}
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-bottom:8px}
+  .tier{border:1px solid var(--line);border-radius:12px;padding:18px;background:#FCFDFF}
+  .tier .badge{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;border-radius:6px;padding:3px 8px;display:inline-block;margin-bottom:9px}
+  .tier.a .badge{background:var(--brand-tint);color:var(--brand-dark)}
+  .tier.b .badge{background:var(--ok-tint);color:var(--ok)}
+  .tier h3{margin:0 0 8px;font-size:16px}
+  .tier p{margin:0 0 10px;font-size:13.8px;color:var(--ink-2)}
+  .tier ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+  .tier li{margin-bottom:5px}
+  .tier code,.strategy td code{font-size:12px;background:var(--line-2);border-radius:4px;padding:1px 5px}
+  table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  table.cmp th{background:var(--navy);color:#fff;text-align:left;padding:10px 14px;font-size:12px;letter-spacing:.3px;text-transform:uppercase}
+  table.cmp td{padding:10px 14px;border-top:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+  table.cmp td:first-child{font-weight:700;color:var(--ink);width:22%}
+  table.cmp td.old{background:#FFF8F8}
+  table.cmp td.new{background:#F5FBF8}
+  .tests{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .test{border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:13.5px;color:var(--ink-2)}
+  .test b{display:block;color:var(--ink);font-size:14px;margin-bottom:4px}
+  .test .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:800;margin-right:6px}
+  .verdict{background:var(--navy-tint);border-radius:12px;padding:20px 22px;font-size:14.5px;color:#1E293B;margin-top:22px}
+  .verdict p{margin:0 0 12px}
+  .verdict p:last-child{margin:0}
+  .verdict b{color:var(--navy)}
+  pre.schema{
+    background:#0F172A;color:#CBD5E1;border-radius:10px;padding:16px 18px;overflow:auto;
+    font-size:12px;line-height:1.6;margin:10px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace
+  }
+  pre.schema .k{color:#7DD3FC}
+  pre.schema .s{color:#86EFAC}
+
+  footer{background:var(--navy);color:#94A3B8;font-size:12.5px;padding:26px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  .hidden{display:none !important}
+  @media (max-width:900px){
+    .detail{grid-template-columns:1fr}
+    aside{position:static}
+    .hero h1{font-size:30px}
+    .mast-cta{display:none}
+    .tool{grid-template-columns:1fr}
+    .topbar{display:none}
+    .masthead .wrap{gap:14px;flex-wrap:wrap}
+    .nav{gap:14px;font-size:13px}
+  }
+</style>
+</head>
+<body class="show-anno">
+
+<div class="toggle-bar">
+  <div class="wrap">
+    <div class="tag">Q&amp;A HUB MOCK-UP <span class="v">v2</span> <em>— cars.co.za · In-depth guides + Quick answers</em></div>
+    <div class="switches">
+      <button class="switch on" id="annoBtn">SEO annotations: ON</button>
+      <button class="switch" id="homeBtn">← Back to hub</button>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="left"><span>New &amp; used cars across South Africa</span><span>Finance · Insurance · Sell my Car</span></div>
+    <div>Help centre · Dealer login</div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="#" onclick="showHub();return false;" aria-label="Cars.co.za"><span class="wm">Cars</span><span class="tld">.co.za</span></a>
+    <nav class="nav">
+      <a>Buy a Car</a><a>Sell my Car</a><a>Finance</a><a>News &amp; Reviews</a>
+      <a class="on" href="#" onclick="showHub();return false;">Answers</a>
+    </nav>
+    <div class="mast-cta"><button class="btn-ghost">Sign in</button><button class="btn-red">Sell my Car</button></div>
+  </div>
+</header>
+
+<!-- ========================= HUB VIEW ========================= -->
+<div id="hubView">
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">CARS.CO.ZA ANSWERS</div>
+      <h1>Straight answers to South Africa's car questions.</h1>
+      <p>Buying, financing, insuring, selling and running a car — answered by the Cars.co.za team, with the cars that fit the answer right next to it.</p>
+      <div class="searchbox">
+        <input placeholder="Ask a question — e.g. “how much deposit do I need for car finance?”">
+        <button>Search</button>
+      </div>
+      <div class="stats">
+        <div><b id="statA">8</b><span>in-depth guides</span></div>
+        <div><b id="statB">20</b><span>quick answers</span></div>
+        <div><b>7</b><span>topic clusters</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="wrap">
+      <div class="anno" style="margin-top:20px">
+        <b>What changed from v1:</b> the first Cars.co.za mock-up gave every one of the 640+ questions its own URL. That produced hundreds of two-to-four-sentence pages competing with each other for the same queries.
+        v2 splits the inventory in two. <b>In-depth guides</b> get their own URL and are built to rank. <b>Quick answers</b> live as passages on the hub, so Google's passage ranking can surface them without a page of their own.
+      </div>
+      <div class="anno">
+        <b>Hub URL:</b> <code>/answers/</code>, with one cluster hub per pill below (<code>/answers/buying-finance/</code>, <code>/answers/selling/</code>…). At 640+ questions, quick answers belong on their <i>cluster</i> hub, not all on one page: roughly 40–90 per cluster keeps each page on one topic, which is what passage ranking rewards.
+        <b>Schema:</b> <code>CollectionPage</code> + <code>ItemList</code> of the guides, <code>FAQPage</code> for the quick answers, <code>BreadcrumbList</code>.
+      </div>
+
+      <div class="cat-nav" id="catNav"></div>
+
+      <!-- In-depth guides -->
+      <div class="section-head">
+        <h2>In-depth guides</h2>
+        <span class="count" id="countA"></span>
+        <span class="anno-inline">OWN URL · BUILT TO RANK</span>
+      </div>
+      <div class="rule"></div>
+      <div class="anno">
+        <b>Why these get their own page:</b> each passes all three tests in the structure recommendation below. Each has search demand of its own, needs a multi-section answer, and has a car shelf that can be filtered to match the answer (first cars under R220 000, hybrids, double-cab bakkies).
+        A dedicated URL gives each one a target for internal links and backlinks, its own Search Console line, and a title tag written for its query.
+      </div>
+      <div class="cards" id="cardsA"></div>
+
+      <!-- Quick answers -->
+      <div class="section-head">
+        <h2>Quick answers</h2>
+        <span class="count" id="countB"></span>
+        <span class="anno-inline">NO OWN URL · PASSAGE TARGETS</span>
+      </div>
+      <div class="rule"></div>
+      <div class="anno">
+        <b>Why these do NOT get their own page:</b> each is a short factual answer with no inventory to sell against it. On its own URL it would be a thin page.
+        Here, every question is a real <code>&lt;h3&gt;</code> with its answer in the initial HTML, and the first sentence answers the question outright. That gives Google a clean passage to rank and to quote in a featured snippet or AI Overview, while the reader gets the answer with no click.
+        Where a quick answer has a bigger sibling, it links down to that guide. This is how the hub passes authority to the pages built to rank.
+      </div>
+      <div class="faq" id="faqB"></div>
+
+      <!-- Strategy -->
+      <section class="strategy">
+        <h2>Structure recommendation</h2>
+        <p class="lead">Use two tiers. Questions with commercial intent and room for a full answer get a guide that ranks in its own right. Everything else becomes a quick answer, and passage ranking does the work a separate URL used to do.</p>
+
+        <div class="tiers">
+          <div class="tier a">
+            <span class="badge">In-depth guide · own URL</span>
+            <h3 id="tierACount">8 in this mock-up</h3>
+            <p>High-consideration questions that need a long answer <em>and</em> lead straight to stock, finance or Sell my Car.</p>
+            <ul>
+              <li>URL nested under its cluster: <code>/answers/buying-finance/car-finance-deposit/</code></li>
+              <li>Quick-answer block at the top (40–60 words) as the snippet target</li>
+              <li>Car shelf filtered to the answer, from live stock</li>
+              <li>Related guides for internal link equity</li>
+              <li>Tracked on its own in Search Console</li>
+            </ul>
+          </div>
+          <div class="tier b">
+            <span class="badge">Quick answer · cluster hub passage</span>
+            <h3 id="tierBCount">20 in this mock-up</h3>
+            <p>Short factual answers with no inventory tie-in, grouped on the cluster hub so nobody clicks through for two sentences.</p>
+            <ul>
+              <li>No URL of its own; a stable anchor like <code>/answers/selling/#roadworthy-certificate</code></li>
+              <li>Question as <code>&lt;h3&gt;</code>, direct answer as its first sentence</li>
+              <li>Answer text in the initial HTML, not loaded on click</li>
+              <li>Links down to its guide where one exists</li>
+              <li>Adds depth to the cluster hub instead of splitting its authority</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub">Three tests that decide the tier</h3>
+        <div class="tests">
+          <div class="test"><b><span class="n">1</span>Does the query have demand of its own?</b>If people search the question as a head or mid-tail term (“balloon payment”), it can carry a title tag and a URL. If it's a long-tail variant, it's a passage.</div>
+          <div class="test"><b><span class="n">2</span>Does the answer need sections?</b>A comparison table, a worked example, or a “when to / when not to” split means a guide. If the full answer fits in about 80 words, it's a quick answer.</div>
+          <div class="test"><b><span class="n">3</span>Is there a shelf to filter?</b>If the answer narrows down which cars to look at, or leads into finance or Sell my Car, the shelf justifies the page. If not, it doesn't.</div>
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-2);margin:12px 0 0">A question needs to pass all three to become a guide. Two of three means it goes on the cluster hub as a quick answer, linked down to the nearest guide.</p>
+
+        <h3 class="sub">v1 vs v2</h3>
+        <table class="cmp">
+          <thead><tr><th></th><th>v1: every question gets a page</th><th>v2: guides + quick answers</th></tr></thead>
+          <tbody>
+            <tr><td>URLs</td><td class="old">640+ question pages</td><td class="new">Guides only; quick answers are anchors on 7–9 cluster hubs</td></tr>
+            <tr><td>Thin content</td><td class="old">Hundreds of pages with a two-to-four-sentence answer</td><td class="new">None. Short answers add depth to a page that already has authority</td></tr>
+            <tr><td>Keyword overlap</td><td class="old">“Balloon payment”, “residual value” and “what is a balloon on car finance” each get a page and compete</td><td class="new">One guide owns the topic, with the variants answered as passages that link to it</td></tr>
+            <tr><td>Car shelf</td><td class="old">Generic “linked cars” on every page</td><td class="new">Filtered per guide to match the answer</td></tr>
+            <tr><td>Reader</td><td class="old">Clicks through to read two sentences</td><td class="new">Gets the fact on the hub, clicks only to go deeper</td></tr>
+            <tr><td>Reporting</td><td class="old">640 rows in Search Console, most near zero</td><td class="new">One row per guide plus one per cluster hub, each with enough traffic to read</td></tr>
+          </tbody>
+        </table>
+
+        <div class="verdict">
+          <p><b>What passage ranking does:</b> since 2021 Google can rank a page for a query answered by a single passage, even when the rest of the page covers a broader topic. It is a ranking signal, not a separate index. The <i>cluster hub</i> is what ranks, and a featured snippet can link straight to the passage with a text fragment (<code>#:~:text=</code>).</p>
+          <p><b>What it doesn't do:</b> rescue a weak page. A quick answer only surfaces if its cluster hub is strong in its own right, with an intro, its guides, internal links and a tight topic. Treat the hubs as real pages, not bare lists.</p>
+          <p><b>A caveat on FAQ markup:</b> since August 2023 Google shows FAQ rich results only for well-known government and health sites, so <code>FAQPage</code> won't earn Cars.co.za an expandable result in Google. It's still worth adding: it's cheap, and it labels each question-and-answer pair clearly for Bing and AI answer engines.</p>
+        </div>
+
+        <div class="anno" style="margin-top:20px">
+          <b>Markup on a cluster hub, quick answers only (<code>FAQPage</code>):</b>
+<pre class="schema">{
+  <span class="k">"@context"</span>: <span class="s">"https://schema.org"</span>,
+  <span class="k">"@type"</span>: <span class="s">"FAQPage"</span>,
+  <span class="k">"url"</span>: <span class="s">"https://www.cars.co.za/answers/selling/"</span>,
+  <span class="k">"mainEntity"</span>: [{
+    <span class="k">"@type"</span>: <span class="s">"Question"</span>,
+    <span class="k">"name"</span>: <span class="s">"Do I need a roadworthy certificate to sell my car?"</span>,
+    <span class="k">"acceptedAnswer"</span>: {
+      <span class="k">"@type"</span>: <span class="s">"Answer"</span>,
+      <span class="k">"text"</span>: <span class="s">"Yes. The buyer can't register the car without one..."</span>
+    }
+  }]
+}</pre>
+          Guide pages use <code>Article</code> + <code>BreadcrumbList</code> + an <code>ItemList</code> of <code>Car</code> listings with <code>Offer</code> prices, not <code>FAQPage</code>.
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= GUIDE VIEW ========================= -->
+<div id="detailView" class="hidden">
+  <main>
+    <div class="wrap">
+      <div class="crumbs"><a href="#" onclick="showHub();return false;">Home</a> › <a href="#" onclick="showHub();return false;">Answers</a> › <a href="#" id="dCrumbLink"></a> › <span id="dCrumb"></span></div>
+      <div class="anno"><b>Guide URL:</b> <code id="dUrl"></code> &nbsp;·&nbsp; <b>Schema:</b> <code>Article</code> + <code>BreadcrumbList</code> + <code>ItemList</code> of <code>Car</code> offers on the shelf. Title tag and H1 match the query this page is built to rank for.</div>
+      <div class="detail">
+        <div>
+          <h1 id="dTitle"></h1>
+          <div class="byline">
+            <span>Cars.co.za Editorial Team</span><span class="dot"></span>
+            <span>Updated October 2026</span><span class="dot"></span>
+            <span id="dRead"></span>
+          </div>
+
+          <div class="quickans">
+            <div class="lbl">Quick answer</div>
+            <p id="dQuick"></p>
+          </div>
+          <div class="anno">
+            <b>The guide's own passage target.</b> 40–60 words that answer the H1 directly, above the fold and before any preamble.
+            It's what Google lifts for a featured snippet and what an AI Overview quotes, so it has to make sense on its own. Below it, the guide earns its ranking with depth the quick answers on the hub don't have.
+          </div>
+
+          <div class="body" id="dBody"></div>
+
+          <div class="module">
+            <div class="module-head">
+              <h2 id="dShelfTitle"></h2>
+              <span class="sub" id="dShelfSub"></span>
+            </div>
+            <div class="anno">
+              <b>This shelf is why the question earns a page of its own.</b> It's a live stock query filtered to match <i>this</i> answer, not a generic “linked cars” block.
+              A row in a quick-answers list can't carry its own shelf without the hub turning into noise.
+            </div>
+            <div id="dShelf"></div>
+          </div>
+
+          <div class="module">
+            <div class="module-head">
+              <h2>Related guides</h2>
+              <span class="sub">Keeps readers in the hub and passes internal link equity between guides</span>
+            </div>
+            <div class="rq" id="dRelated"></div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="box">
+            <h4>On this page</h4>
+            <div class="toc" id="dToc"></div>
+          </div>
+          <div class="box helpbox" id="dHelp"></div>
+          <div class="box">
+            <h4>Quick answers in this topic</h4>
+            <div class="toc" id="dQuickLinks"></div>
+            <div class="anno" style="margin:10px 0 0">These link to <i>anchors</i> on the cluster hub, not to pages. The link opens the answer in place.</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>Cars.co.za Answers: structural mock-up (v2) for content-strategy illustration. Not affiliated with Cars.co.za. Car listings and prices are illustrative.</div>
+    <div>Generated 11 Oct 2026</div>
+  </div>
+</footer>
+
+<script>
+/* ============================ DATA ============================ */
+
+// Every listing is an illustrative placeholder: plausible SA models and prices, not scraped stock.
+const CARS = {
+  swift:      {name:"2022 Suzuki Swift 1.2 GL", km:"38 000 km", loc:"Johannesburg, GP", price:"R 189 900"},
+  vivo:       {name:"2021 Volkswagen Polo Vivo 1.4 Trendline", km:"52 000 km", loc:"Cape Town, WC", price:"R 179 900"},
+  i10:        {name:"2021 Hyundai Grand i10 1.0 Motion", km:"41 000 km", loc:"Durban, KZN", price:"R 159 900"},
+  starlet:    {name:"2022 Toyota Starlet 1.5 Xs", km:"33 000 km", loc:"Pretoria, GP", price:"R 209 900"},
+  polo:       {name:"2022 Volkswagen Polo 1.0 TSI Life", km:"36 000 km", loc:"Gqeberha, EC", price:"R 289 900"},
+  ccross:     {name:"2022 Toyota Corolla Cross 1.8 XS", km:"45 000 km", loc:"Johannesburg, GP", price:"R 369 900"},
+  ccHybrid:   {name:"2023 Toyota Corolla Cross 1.8 XR Hybrid", km:"28 000 km", loc:"Cape Town, WC", price:"R 439 900"},
+  jolionHev:  {name:"2023 Haval Jolion 1.5 HEV Ultra Luxury", km:"21 000 km", loc:"Pretoria, GP", price:"R 399 900"},
+  dolphin:    {name:"2024 BYD Dolphin Dynamic (EV)", km:"9 000 km", loc:"Sandton, GP", price:"R 319 900"},
+  hilux28:    {name:"2021 Toyota Hilux 2.8 GD-6 Raider D/C", km:"89 000 km", loc:"Bloemfontein, FS", price:"R 549 900"},
+  hilux24:    {name:"2022 Toyota Hilux 2.4 GD-6 Raider D/C", km:"71 000 km", loc:"Nelspruit, MP", price:"R 489 900"},
+  rangerWt:   {name:"2023 Ford Ranger 2.0 BiTurbo Wildtrak D/C", km:"46 000 km", loc:"Durban, KZN", price:"R 699 900"},
+  rangerXl:   {name:"2023 Ford Ranger 2.0 SiT XL D/C", km:"54 000 km", loc:"Polokwane, LP", price:"R 459 900"},
+  fortuner:   {name:"2020 Toyota Fortuner 2.8 GD-6 4x4", km:"110 000 km", loc:"Rustenburg, NW", price:"R 529 900"},
+  jimny:      {name:"2022 Suzuki Jimny 1.5 GLX", km:"30 000 km", loc:"Cape Town, WC", price:"R 389 900"}
+};
+
+const CATS = ["All","Buying & Finance","Selling & Trade-in","Running Costs","Insurance & Licensing","Maintenance","EVs & Hybrids","Jargon & Paperwork"];
+const SLUG = {
+  "Buying & Finance":"buying-finance","Selling & Trade-in":"selling","Running Costs":"running-costs",
+  "Insurance & Licensing":"insurance-licensing","Maintenance":"maintenance","EVs & Hybrids":"evs-hybrids","Jargon & Paperwork":"jargon-paperwork"
+};
+
+/* ---- In-depth guides: own URL ---- */
+const GUIDES = [
+  {
+    id:"finance-deposit",
+    cat:"Buying & Finance",
+    q:"How much deposit do I need for car finance in South Africa?",
+    slug:"car-finance-deposit",
+    teaser:"What banks actually require, what a 10% or 20% deposit saves you, and how to avoid owing more than the car is worth.",
+    read:"6 min read",
+    quick:"No minimum is required by law, and buyers with strong credit are often approved with no deposit at all. A deposit of 10–20% still pays off: it lowers the instalment, cuts the total interest, improves approval odds and stops you owing more than the car is worth. On a R300 000 car, 20% down saves roughly R27 000 in interest.",
+    shelf:{type:"cars",title:"Cars that fit a 20% deposit on R5 000 a month",sub:"Filtered to about R230 000–R300 000 on a 72-month term",cars:["polo","starlet","swift","vivo"]},
+    help:{h:"Know your budget first",p:"Get pre-qualified in a few minutes, with no effect on your credit score.",b:"Check what I qualify for"},
+    related:["balloon-payment","monthly-cost","first-car","cheap-insurance"],
+    body:[
+      {h:"Do you legally need a deposit?",p:[
+        "No. The National Credit Act requires lenders to assess whether you can afford the instalment. It doesn't set a minimum deposit. Whether a bank asks for one depends on your credit record, income, and the age and price of the car.",
+        "In practice, applicants with a clean record and stable income are routinely approved with no deposit. A deposit becomes more likely if you're self-employed, have a thin credit file, are buying an older car, or are asking for a long term."
+      ]},
+      {h:"What a deposit does to the numbers",p:["Worked example: a R300 000 car over 72 months at an illustrative 13% interest rate."],
+        thead:["Deposit","Amount financed","Monthly instalment","Total interest"],
+        table:[
+          ["None","R 300 000","≈ R 6 020","≈ R 133 600"],
+          ["10% (R 30 000)","R 270 000","≈ R 5 420","≈ R 120 200"],
+          ["20% (R 60 000)","R 240 000","≈ R 4 820","≈ R 106 900"]
+        ],
+        after:["Excludes initiation and monthly service fees, which most banks add on top. Your rate depends on your credit profile and is set at approval."],
+        fine:true},
+      {h:"The real reason to put money down: negative equity",p:[
+        "A new car loses value fastest in its first two years. Finance it with no deposit and the settlement figure can sit above the car's trade-in value for much of the term. If you need to sell, or the car is written off and the insurer pays out retail value, you cover the gap yourself.",
+        "A 10–20% deposit usually keeps you on the right side of that line. Credit-shortfall cover on your insurance is the other way to protect against it."
+      ]},
+      {h:"Where a deposit can come from",p:[],list:[
+        "Cash savings. This is the cheapest source, since it carries no interest",
+        "The trade-in value of your current car, once its own finance is settled",
+        "Dealer deposit contributions on new models. These are common at month-end and model run-outs, so ask before you sign",
+        "Avoid using a personal loan as a deposit. It's usually at a higher rate than the car finance it's meant to reduce"
+      ]}
+    ]
+  },
+  {
+    id:"balloon-payment",
+    cat:"Buying & Finance",
+    q:"What is a balloon payment, and should you take one?",
+    slug:"balloon-payment",
+    teaser:"How a balloon (residual) lowers your instalment, what it costs over the term, and the only situation where it makes sense.",
+    read:"5 min read",
+    quick:"A balloon payment, also called a residual, is a lump sum of usually 10–40% of the price that you defer to the end of the finance term. It lowers your monthly instalment, but you pay interest on that amount for the whole term and owe it in cash at the end. It only makes sense if you plan to trade in, and the car will be worth more than the balloon.",
+    shelf:{type:"cars",title:"Cars that hold their value well",sub:"Strong resale protects you when the balloon falls due",cars:["hilux24","fortuner","jimny","polo"]},
+    help:{h:"Compare with and without",p:"See the instalment and the total cost side by side before you choose a balloon.",b:"Open the finance calculator"},
+    related:["finance-deposit","monthly-cost","hilux-vs-ranger","sell-or-trade"],
+    body:[
+      {h:"How a balloon changes the deal",p:["Worked example: a R400 000 car over 72 months at an illustrative 13% interest rate."],
+        thead:["Balloon","Monthly instalment","Owed at the end","Total interest"],
+        table:[
+          ["None","≈ R 8 030","R 0","≈ R 178 100"],
+          ["20%","≈ R 7 290","R 80 000","≈ R 204 900"],
+          ["30%","≈ R 6 920","R 120 000","≈ R 218 300"],
+          ["40%","≈ R 6 550","R 160 000","≈ R 231 700"]
+        ],
+        after:["A 30% balloon saves about R1 100 a month but adds about R40 000 in interest. You'd also need R120 000 in six years' time."],
+        fine:false},
+      {h:"Your three options when it falls due",p:[],list:[
+        "<b>Pay it in cash.</b> This is the only option that doesn't add cost",
+        "<b>Refinance it.</b> You take a new loan on a six-year-old car, usually at a higher rate. This is how a balloon turns into a debt trap",
+        "<b>Sell or trade in the car and settle it.</b> This works if the car is worth more than the balloon, and it's why resale value matters so much"
+      ]},
+      {h:"When a balloon is reasonable",p:[
+        "You change cars every three to five years, you've picked a model with strong resale value, and the balloon is set at or below its projected trade-in value. In that case the balloon behaves more like a guaranteed future value than a debt.",
+        "If you plan to keep the car until it's paid off, or the balloon is only there to make an unaffordable car look affordable, skip it. Choose a cheaper car instead."
+      ]}
+    ]
+  },
+  {
+    id:"hilux-vs-ranger",
+    cat:"Buying & Finance",
+    q:"Toyota Hilux vs Ford Ranger: which bakkie should you buy?",
+    slug:"toyota-hilux-vs-ford-ranger",
+    teaser:"Refinement, power, resale value and running costs compared for South Africa's two best-selling bakkies.",
+    read:"7 min read",
+    quick:"The current Ford Ranger is the more refined and better-equipped bakkie, with stronger engine options and a more car-like cabin. The Toyota Hilux counters with excellent resale value, the widest dealer and parts network in the country, and a durable reputation. Choose the Ranger for comfort and tech, and the Hilux for running costs over long ownership.",
+    shelf:{type:"cars",title:"Double cabs in stock",sub:"Two of each, so you can compare like for like",cars:["hilux28","hilux24","rangerWt","rangerXl"]},
+    help:{h:"Test them back to back",p:"Find a dealer near you with both bakkies on the floor.",b:"Find dealers near me"},
+    related:["balloon-payment","cheap-insurance","monthly-cost","finance-deposit"],
+    body:[
+      {h:"At a glance",p:[],
+        thead:["","Toyota Hilux","Ford Ranger"],
+        table:[
+          ["Built in","Prospecton, Durban","Silverton, Pretoria"],
+          ["Strengths","Resale value, dealer reach, durability","Refinement, cabin tech, towing and power options"],
+          ["Weak spots","Older platform, firmer ride unladen","Higher prices on top-spec derivatives"],
+          ["Best for","Long ownership, rural use, fleets","Daily driving and family use, towing"]
+        ]},
+      {h:"Resale value is the Hilux's trump card",p:[
+        "Hilux values hold up unusually well on the used market. That matters most if you finance with a balloon or change bakkies every few years. In practice it can offset a slightly higher purchase price.",
+        "The flip side is that high demand also makes the Hilux a frequent theft and hijacking target. That shows up in insurance premiums and tracking requirements."
+      ]},
+      {h:"Why the Ranger wins on the road",p:[
+        "The current-generation Ranger rides and steers more like an SUV than a workhorse. Its cabin and driver-assistance tech are a generation ahead. If the bakkie is also the family car, that matters every day."
+      ]},
+      {h:"How to decide",p:[],list:[
+        "Mostly gravel, farm or remote use, with long ownership: Hilux",
+        "Mostly tar, family duty, towing a caravan or boat: Ranger",
+        "Financing with a balloon: lean towards the Hilux for its resale value",
+        "Get an insurance quote on both before you choose. The difference can be bigger than you expect"
+      ]}
+    ]
+  },
+  {
+    id:"first-car",
+    cat:"Buying & Finance",
+    q:"What's the best first car for a new driver in South Africa?",
+    slug:"best-first-car",
+    teaser:"Cheap to insure, cheap to fix, safe enough — the shortlist and the trade-offs, under R220 000.",
+    read:"5 min read",
+    quick:"Look for a small petrol hatchback under about R220 000 with ABS, at least two airbags, a low insurance group and parts at every dealer. The Suzuki Swift, Toyota Starlet, VW Polo Vivo and Hyundai Grand i10 tick every box. Avoid powerful or high-theft models: for a young driver they can cost more to insure each month than to finance.",
+    shelf:{type:"cars",title:"First cars under R220 000",sub:"Small petrol hatchbacks with ABS and dual airbags",cars:["swift","starlet","vivo","i10"]},
+    help:{h:"Insurance first, car second",p:"Compare insurance quotes for a new driver before you commit to a model.",b:"Get insurance quotes"},
+    related:["cheap-insurance","monthly-cost","finance-deposit","hybrid-or-ev"],
+    body:[
+      {h:"What actually matters for a first car",p:[],list:[
+        "<b>Insurance cost.</b> For drivers under 25 this is often the largest monthly cost after the instalment",
+        "<b>Safety basics.</b> ABS and at least dual front airbags. Check the Global NCAP rating where one exists",
+        "<b>Parts and servicing.</b> Brands with wide dealer networks keep repairs quick and affordable",
+        "<b>Fuel economy.</b> Small-capacity petrol engines in this class typically use around 5–6 L/100 km in mixed driving"
+      ]},
+      {h:"The shortlist",p:[],
+        thead:["Model","Why it's on the list"],
+        table:[
+          ["Suzuki Swift","Very light and economical, low running costs, wide dealer network"],
+          ["Toyota Starlet","Toyota dealer reach and strong resale, roomy for its class"],
+          ["VW Polo Vivo","Parts everywhere, a familiar and proven platform"],
+          ["Hyundai Grand i10","Low purchase price, good standard features"]
+        ]},
+      {h:"New or used?",p:[
+        "A two-to-four-year-old example of any car on this list avoids the steepest depreciation. It will often still have a service plan left. A new car brings a full warranty and dealer deposit deals. Compare the monthly cost of both, including insurance."
+      ]}
+    ]
+  },
+  {
+    id:"cheap-insurance",
+    cat:"Insurance & Licensing",
+    q:"Which cars are cheapest to insure in South Africa?",
+    slug:"cheapest-cars-to-insure",
+    teaser:"Why some cheap cars cost a lot to insure, and how theft risk, parts prices and power shape your premium.",
+    read:"6 min read",
+    quick:"Small, low-powered hatchbacks with cheap parts and low theft rates are usually the cheapest to insure. Think Suzuki, Hyundai, Kia and Toyota's entry models. Popular theft and hijacking targets can cost more to insure than their price suggests, even when they're cheap to buy. Your age, claims history, address and overnight parking still move the premium more than the car does.",
+    shelf:{type:"cars",title:"Low-insurance-group cars in stock",sub:"Small-engined hatchbacks with modest repair costs",cars:["i10","swift","starlet","polo"]},
+    help:{h:"Compare before you buy",p:"Get quotes on two or three cars on your shortlist. The spread can surprise you.",b:"Compare insurance quotes"},
+    related:["first-car","monthly-cost","hilux-vs-ranger","finance-deposit"],
+    body:[
+      {h:"What insurers price the car on",p:[],list:[
+        "<b>Theft and hijacking risk.</b> Models in high demand on the black market carry a loading, and insurers may require a tracking device",
+        "<b>Repair cost.</b> Parts prices, and how many panels and sensors a minor bump involves",
+        "<b>Power and performance.</b> More power correlates with more severe claims",
+        "<b>Value.</b> A higher sum insured means a higher premium, all else equal"
+      ]},
+      {h:"What they price you on",p:[
+        "Age, driving record, claims history, credit record (with consent), where the car sleeps at night, and how many kilometres you drive. A 22-year-old in a Polo Vivo can pay more than a 45-year-old in a premium SUV."
+      ]},
+      {h:"Ways to bring the premium down",p:[],list:[
+        "Choose a higher excess, if you could pay it from savings",
+        "Install an approved tracking device, which some insurers require for high-risk models anyway",
+        "Park in a locked garage, and declare it",
+        "Choose cover based on retail value rather than an inflated agreed value",
+        "Re-quote every year. Loyalty is rarely rewarded"
+      ]}
+    ]
+  },
+  {
+    id:"monthly-cost",
+    cat:"Running Costs",
+    q:"How much does it really cost to own a car each month?",
+    slug:"monthly-cost-of-owning-a-car",
+    teaser:"Instalment, insurance, fuel, tracking, licence and the maintenance fund most people forget, for a R250 000 car.",
+    read:"6 min read",
+    quick:"Budget roughly 1.5 to 2 times the finance instalment. For a R250 000 hatchback with 10% down over 72 months, the instalment is about R4 500. Add insurance, fuel for 1 500 km, tracking, licence and a maintenance fund, and the realistic monthly total is about R8 400–R9 400. Rule of thumb: keep total car costs under 20% of take-home pay.",
+    shelf:{type:"cars",title:"Cars that keep the monthly total down",sub:"Economical, cheap to service and insure",cars:["swift","starlet","vivo","i10"]},
+    help:{h:"Run your own numbers",p:"Enter your car, deposit and mileage to see your true monthly cost.",b:"Open the cost calculator"},
+    related:["finance-deposit","cheap-insurance","first-car","hybrid-or-ev"],
+    body:[
+      {h:"The monthly breakdown",p:["Illustrative: R250 000 hatchback, 10% deposit, 72 months at 13%, 1 500 km a month at 6 L/100 km."],
+        thead:["Cost","Per month"],
+        table:[
+          ["Finance instalment","≈ R 4 520"],
+          ["Comprehensive insurance","R 1 200 – R 1 800"],
+          ["Fuel (90 L at an illustrative R22/L)","≈ R 1 980"],
+          ["Tracking device","R 150 – R 250"],
+          ["Licence disc (annual, spread monthly)","≈ R 50 – R 80"],
+          ["Maintenance, tyres and repairs fund","R 500 – R 800"],
+          ["Total","≈ R 8 400 – R 9 400"]
+        ],
+        after:["Fuel and insurance vary most by person. Swap in your own figures."], fine:true},
+      {h:"The cost people forget",p:[
+        "Tyres, brake pads, a battery and anything that's not covered once the service plan ends. Putting R500–R800 a month into a separate account turns a R7 000 tyre bill into a non-event."
+      ]},
+      {h:"How to cut it",p:[],list:[
+        "A smaller engine saves on fuel, insurance and tyres at once",
+        "A larger deposit reduces the only cost that also accrues interest",
+        "Re-quote insurance every year",
+        "Choose a car with time left on its service or maintenance plan"
+      ]}
+    ]
+  },
+  {
+    id:"hybrid-or-ev",
+    cat:"EVs & Hybrids",
+    q:"Should you buy a hybrid or an electric car in South Africa?",
+    slug:"hybrid-or-electric-car",
+    teaser:"Charging, range, purchase price and long-distance travel. Why most South Africans should start with a hybrid.",
+    read:"7 min read",
+    quick:"For most South African drivers, a hybrid is the safer choice today. It cuts fuel use in town, needs no charging, and handles long-distance trips without planning. An EV makes sense if you can charge at home, ideally with solar or backup power, and most of your driving is in and around a metro. Public fast-charging is growing, but still thin outside the major routes.",
+    shelf:{type:"cars",title:"Hybrids and EVs in stock",sub:"Two hybrids, one EV and the petrol equivalent for comparison",cars:["ccHybrid","jolionHev","dolphin","ccross"]},
+    help:{h:"Compare running costs",p:"See fuel against electricity costs for your own monthly mileage.",b:"Compare running costs"},
+    related:["monthly-cost","first-car","cheap-insurance","finance-deposit"],
+    body:[
+      {h:"Hybrid, plug-in hybrid or EV: the difference",p:[],
+        thead:["Type","How it works","Charging"],
+        table:[
+          ["Hybrid (HEV)","Petrol engine plus a small battery that recharges itself","Never"],
+          ["Plug-in hybrid (PHEV)","Larger battery for roughly 50–100 km of electric driving, then petrol","Optional, at home"],
+          ["Electric (EV)","Battery and motor only","Always: home, work or public"]
+        ]},
+      {h:"Why hybrids suit South Africa right now",p:[
+        "A hybrid saves the most in stop-start traffic, which is exactly where South Africans burn most fuel. It needs no change in habits, no wall box, and no route planning for a Johannesburg-to-Durban trip."
+      ]},
+      {h:"When an EV is the right call",p:[],list:[
+        "You have off-street parking and can install a home charger",
+        "Most of your driving is within a metro, with only occasional long trips",
+        "Your home has solar or battery backup, which insulates charging from outages and tariff increases",
+        "You've compared the higher purchase price against the fuel saving over the years you'll own it"
+      ]}
+    ]
+  },
+  {
+    id:"sell-or-trade",
+    cat:"Selling & Trade-in",
+    q:"Should you sell your car privately or trade it in?",
+    slug:"sell-privately-or-trade-in",
+    teaser:"How much more a private sale gets you, what it costs in time and risk, and the paperwork either way.",
+    read:"6 min read",
+    quick:"A private sale usually gets the best price. In return you handle the advert, viewings, test drives, payment verification and the change of ownership yourself. A trade-in or instant offer is faster and safer: the dealer settles any finance and does the paperwork, but pays closer to trade value. If time or safety matters more than the last few thousand rand, take the offer.",
+    shelf:{type:"tool",h:"Get an instant offer on your car",p:"Enter your registration or VIN and mileage for a guaranteed offer from a verified dealer, usually within 24 hours. There's no obligation, and any outstanding finance is settled for you.",fields:["Registration or VIN","Mileage","Province"],b:"Get my offer"},
+    help:{h:"Know what it's worth",p:"Check trade and retail value before you list or negotiate.",b:"Value my car"},
+    related:["balloon-payment","finance-deposit","hilux-vs-ranger","monthly-cost"],
+    body:[
+      {h:"The trade-off at a glance",p:[],
+        thead:["","Private sale","Trade-in / instant offer"],
+        table:[
+          ["Price","Closest to retail","Closer to trade"],
+          ["Time to sell","Days to weeks","Same day to a few days"],
+          ["Finance settlement","You arrange it with the bank","Dealer handles it"],
+          ["Paperwork","You submit the change of ownership","Dealer does it"],
+          ["Risk","Fraudulent payments and unsafe viewings","Minimal"]
+        ]},
+      {h:"If you sell privately",p:[],list:[
+        "Never release the car until the money has cleared in your account. Instant-EFT and proof-of-payment scams are the most common fraud",
+        "Meet in a public place for viewings, and accompany test drives",
+        "Get a roadworthy certificate. The buyer needs it to register the car",
+        "Submit the Notification of Change of Ownership (NCO) within 21 days. Until you do, fines and licence fees stay in your name"
+      ]},
+      {h:"If the car is still financed",p:[
+        "The bank holds the title, so either route starts with a settlement letter. With a trade-in or instant offer the dealer pays the bank directly. In a private sale, the buyer usually pays the bank, and you pay the buyer any difference."
+      ]}
+    ]
+  }
+];
+
+/* ---- Quick answers: passages on the cluster hub, no URL of their own ---- */
+const QUICK = [
+  {cat:"Buying & Finance", id:"finance-term", q:"How long can a car finance term be?",
+   a:["Most South African banks finance cars over 12 to 72 months. A longer term lowers the instalment but raises the total interest, and increases the chance you'll owe more than the car is worth for longer. Keep the term as short as your budget allows."],
+   deep:"finance-deposit"},
+  {cat:"Buying & Finance", id:"balloon-vs-residual", q:"Is a residual the same as a balloon payment?",
+   a:["Yes. Banks and dealers use “residual” and “balloon” for the same thing: a lump sum deferred to the end of the finance term that lowers your monthly instalment."],
+   deep:"balloon-payment"},
+  {cat:"Buying & Finance", id:"on-the-road-fee", q:"What does an “on the road” fee cover?",
+   a:["It covers the dealer's cost of getting a car legally on the road: first registration and licensing, number plates, the licence disc and delivery admin. It's charged on top of the advertised price, so ask for it in writing and compare it between dealers."]},
+  {cat:"Buying & Finance", id:"demo-model", q:"What is a demo model?",
+   a:["A demo is a car a dealer has registered and used for test drives, usually sold with low mileage and a discount. The warranty and service plan started when the car was first registered, so check how much of each is left before you compare it with a new car."]},
+
+  {cat:"Selling & Trade-in", id:"roadworthy-certificate", q:"Do I need a roadworthy certificate to sell my car?",
+   a:["Yes. The buyer can't register the car in their name without a valid roadworthy certificate, so on a private sale the seller usually provides it. A certificate is valid for 60 days for registration. Get it close to the sale date."],
+   deep:"sell-or-trade"},
+  {cat:"Selling & Trade-in", id:"documents-to-sell", q:"What documents do I need to sell my car?",
+   a:["You need the vehicle registration certificate, your ID, proof of address, a roadworthy certificate, the service history and, if it's financed, a settlement letter from the bank. You must submit the Notification of Change of Ownership (NCO) within 21 days of the sale."],
+   deep:"sell-or-trade"},
+  {cat:"Selling & Trade-in", id:"sell-financed-car", q:"Can I sell a car that's still under finance?",
+   a:["Yes. Ask your bank for a settlement letter, because the bank holds the title until it's paid. The buyer or dealer pays the settlement directly to the bank. If you sell for less than the settlement amount, you pay the difference."],
+   deep:"sell-or-trade"},
+
+  {cat:"Running Costs", id:"licence-disc-cost", q:"How much does a car licence disc cost?",
+   a:["It depends on your province and the car's tare (unladen) mass. Heavier vehicles pay more. Renewal is annual, and there's a 21-day grace period after expiry before penalties apply."]},
+  {cat:"Running Costs", id:"l-per-100km", q:"What does L/100 km mean, and how do I convert it to km/L?",
+   a:["L/100 km is the number of litres of fuel a car uses to travel 100 km, so lower is better. To convert it, divide 100 by the figure: 6 L/100 km equals about 16.7 km/L."]},
+  {cat:"Running Costs", id:"real-world-fuel", q:"Why is my real fuel consumption higher than the claimed figure?",
+   a:["Claimed figures come from a standardised lab test, not from South African traffic, heat, altitude or air-con use. A real-world figure 10–25% above the claim is normal. Short trips, heavy loads and under-inflated tyres push it higher."],
+   deep:"monthly-cost"},
+
+  {cat:"Insurance & Licensing", id:"insurance-compulsory", q:"Is car insurance compulsory in South Africa?",
+   a:["No, private car insurance isn't compulsory by law. The Road Accident Fund levy in the fuel price covers injury claims. If your car is financed, the bank will require comprehensive cover until it's paid off."],
+   deep:"cheap-insurance"},
+  {cat:"Insurance & Licensing", id:"retail-market-trade", q:"What's the difference between retail, market and trade value on my policy?",
+   a:["They're three ways an insurer can value your car at claim time, usually taken from TransUnion's vehicle-value tables. Retail value is what a dealer would sell it for, and it's the highest. Trade value is what a dealer would pay you, and it's the lowest. Market value is the average of the two. Check which one your policy uses."]},
+  {cat:"Insurance & Licensing", id:"comprehensive-vs-tpft", q:"Comprehensive vs third party, fire and theft: what's the difference?",
+   a:["Comprehensive cover pays for damage to your own car as well as to other people's, plus theft and fire. Third party, fire and theft covers damage you cause to others, and your car only if it's stolen or burnt. It doesn't cover accident damage to your own car."]},
+
+  {cat:"Maintenance", id:"service-vs-maintenance-plan", q:"What's the difference between a service plan and a maintenance plan?",
+   a:["A service plan covers scheduled services: labour, oil, filters and other items on the service schedule. A maintenance plan covers all of that plus wear-and-tear parts such as brake pads, wiper blades, shock absorbers and the clutch. Neither covers tyres or accident damage."]},
+  {cat:"Maintenance", id:"tyre-tread-depth", q:"When should I replace my tyres?",
+   a:["The legal minimum tread depth in South Africa is 1 mm. Wet-weather grip drops well before that, so replace tyres at 2–3 mm. Replace them earlier if you see cracks or bulges, or if they're more than about five years old."]},
+  {cat:"Maintenance", id:"service-interval", q:"How often should I service my car?",
+   a:["Follow the manufacturer's schedule in your service book. For most modern cars that's every 15 000 km or once a year, whichever comes first. Skipping a service can void the warranty or service plan."]},
+
+  {cat:"EVs & Hybrids", id:"ev-charge-time", q:"How long does it take to charge an electric car?",
+   a:["It depends on the charger. A 7 kW home wall box fills a typical 60 kWh battery in about 8–10 hours, overnight. A DC fast charger takes most EVs from 20% to 80% in roughly 30–45 minutes. A standard wall socket takes more than a day."],
+   deep:"hybrid-or-ev"},
+  {cat:"EVs & Hybrids", id:"hybrid-needs-charging", q:"Do you need to plug in a hybrid?",
+   a:["No, not a regular hybrid (HEV). Its battery recharges from the engine and from braking. Only a plug-in hybrid (PHEV) needs plugging in to get its full electric range."],
+   deep:"hybrid-or-ev"},
+
+  {cat:"Jargon & Paperwork", id:"what-is-a-vin", q:"What is a VIN, and where do I find it?",
+   a:["A VIN is a car's unique 17-character identification number. You'll find it on the registration certificate, at the base of the windscreen on the driver's side, and stamped on the chassis. Check that all three match before you buy a used car."]},
+  {cat:"Jargon & Paperwork", id:"code-3-code-4", q:"What do “Code 3” and “Code 4” mean on a car?",
+   a:["They're eNaTIS status codes for written-off vehicles. Code 3 means the car was rebuilt after being written off and passed police clearance and a roadworthy test, so it can be re-registered. Code 4 means it's permanently unroadworthy and can only be sold for parts. Always check before you buy."]}
+];
+
+/* ============================ RENDER ============================ */
+let activeCat = "All";
+const byId = id => GUIDES.find(g => g.id === id);
+const urlOf = g => `/answers/${SLUG[g.cat]}/${g.slug}/`;
+const esc = s => s.replace(/"/g,"&quot;");
+
+function carCard(key){
+  const c = CARS[key];
+  return `<div class="car">
+    <div class="thumb">CAR PHOTO</div>
+    <div class="in">
+      <div class="name">${c.name}</div>
+      <div class="meta">${c.km} · ${c.loc}</div>
+      <span class="src anno-inline" style="display:none">illustrative listing</span>
+      <div class="price">${c.price}</div>
+      <button class="cta">View car</button>
+    </div>
+  </div>`;
+}
+
+function renderCatNav(){
+  document.getElementById("catNav").innerHTML = CATS.map(c =>
+    `<button class="cat-pill ${c===activeCat?"on":""}" data-cat="${esc(c)}">${c}</button>`).join("");
+  document.querySelectorAll(".cat-pill").forEach(b =>
+    b.onclick = () => { activeCat = b.dataset.cat; renderCatNav(); renderHub(); });
+}
+
+function renderHub(){
+  const a = GUIDES.filter(q => activeCat==="All" || q.cat===activeCat);
+  const b = QUICK.filter(q => activeCat==="All" || q.cat===activeCat);
+  const where = activeCat==="All" ? "/answers/" : `/answers/${SLUG[activeCat]}/`;
+
+  document.getElementById("countA").textContent = `${a.length} guide${a.length!==1?"s":""} · own URL each`;
+  document.getElementById("countB").textContent = `${b.length} answer${b.length!==1?"s":""} · on ${where}`;
+
+  document.getElementById("cardsA").innerHTML = a.length ? a.map(q => `
+    <div class="qcard" onclick="showDetail('${q.id}')">
+      <div class="chips"><span class="chip cat">${q.cat}</span>${q.shelf.type==="cars"?`<span class="chip stock">Matched car shelf</span>`:`<span class="chip stock">Instant offer</span>`}<span class="chip">${q.read}</span></div>
+      <h3>${q.q}</h3>
+      <p>${q.teaser}</p>
+      <div class="foot">
+        <span class="anno-inline">${urlOf(q)}</span>
+        <span class="go">Read the guide →</span>
+      </div>
+    </div>`).join("") : `<p style="color:var(--muted)">No in-depth guides in this topic yet.</p>`;
+
+  document.getElementById("faqB").innerHTML = b.length ? b.map(q => {
+    const g = q.deep && byId(q.deep);
+    return `
+    <div class="faq-item" id="${q.id}">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span><h3>${q.q}</h3>${activeCat==="All"?`<span class="meta">${q.cat.toUpperCase()}</span>`:""}</span><span class="ic">+</span>
+      </button>
+      <div class="faq-a">
+        ${q.a.map(p=>`<p>${p}</p>`).join("")}
+        ${g?`<a class="deep" href="#" onclick="showDetail('${g.id}');return false;">In-depth: ${g.q} →</a>`:""}
+        <div class="anno" style="margin-top:12px">Anchor only: <code>/answers/${SLUG[q.cat]}/#${q.id}</code>. No URL of its own and no car shelf. Included in the cluster hub's <code>FAQPage</code> markup${g?`, and links down to <code>${urlOf(g)}</code>`:""}.</div>
+      </div>
+    </div>`;}).join("") : `<p style="padding:18px;color:var(--muted)">No quick answers in this topic yet.</p>`;
+
+  syncAnno();
+}
+
+function toggleFaq(btn){
+  const item = btn.parentElement;
+  item.classList.toggle("open");
+  btn.setAttribute("aria-expanded", item.classList.contains("open"));
+}
+
+function openQuick(id){
+  const q = QUICK.find(x => x.id === id);
+  if(!q) return;
+  activeCat = q.cat; renderCatNav(); renderHub(); showHub(true);
+  const el = document.getElementById(id);
+  el.classList.add("open","flash");
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function showDetail(id){
+  const q = byId(id);
+  if(!q) return;
+  document.getElementById("hubView").classList.add("hidden");
+  document.getElementById("detailView").classList.remove("hidden");
+
+  const crumbLink = document.getElementById("dCrumbLink");
+  crumbLink.textContent = q.cat;
+  crumbLink.onclick = () => { activeCat = q.cat; renderCatNav(); renderHub(); showHub(); return false; };
+  document.getElementById("dCrumb").textContent = q.q;
+  document.getElementById("dUrl").textContent = urlOf(q);
+  document.getElementById("dTitle").textContent = q.q;
+  document.getElementById("dRead").textContent = q.read;
+  document.getElementById("dQuick").textContent = q.quick;
+
+  document.getElementById("dBody").innerHTML = q.body.map((s,i) => `
+    <h2 id="s${i}">${s.h}</h2>
+    ${(s.p||[]).map(p=>`<p>${p}</p>`).join("")}
+    ${s.table?`<table class="spec">${s.thead?`<thead><tr>${s.thead.map(h=>`<th>${h}</th>`).join("")}</tr></thead>`:""}<tbody>${s.table.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`:""}
+    ${s.list?`<ul>${s.list.map(l=>`<li>${l}</li>`).join("")}</ul>`:""}
+    ${(s.after||[]).map(p=>`<p${s.fine?' class="fine"':""}>${p}</p>`).join("")}
+  `).join("");
+
+  const sh = q.shelf;
+  if(sh.type==="cars"){
+    document.getElementById("dShelfTitle").textContent = sh.title;
+    document.getElementById("dShelfSub").textContent = sh.sub;
+    document.getElementById("dShelf").innerHTML = `<div class="cars">${sh.cars.map(carCard).join("")}</div>`;
+  } else {
+    document.getElementById("dShelfTitle").textContent = "Selling? Start here";
+    document.getElementById("dShelfSub").textContent = "This guide's shelf is a tool, not stock";
+    document.getElementById("dShelf").innerHTML = `<div class="tool">
+      <div><h3>${sh.h}</h3><p>${sh.p}</p><div class="fields">${sh.fields.map(f=>`<span>${f}</span>`).join("")}</div></div>
+      <button class="btn-red" style="padding:12px 20px;font-size:14px">${sh.b}</button>
+    </div>`;
+  }
+
+  document.getElementById("dRelated").innerHTML = q.related.map(rid => {
+    const r = byId(rid);
+    return r ? `<a href="#" onclick="showDetail('${r.id}');return false;"><span>${r.q}</span><span class="arrow">→</span></a>` : "";
+  }).join("");
+
+  document.getElementById("dToc").innerHTML = q.body.map((s,i)=>`<a href="#s${i}">${s.h}</a>`).join("");
+  document.getElementById("dHelp").innerHTML = `<h4>${q.help.h}</h4><p>${q.help.p}</p><button>${q.help.b}</button>`;
+
+  const linked = QUICK.filter(t => t.deep===q.id);
+  const sameCat = QUICK.filter(t => t.cat===q.cat && t.deep!==q.id);
+  const qs = [...linked, ...sameCat].slice(0,4);
+  document.getElementById("dQuickLinks").innerHTML = qs.length
+    ? qs.map(t=>`<a href="#" onclick="openQuick('${t.id}');return false;">${t.q}</a>`).join("")
+    : `<a href="#" onclick="showHub();return false;">Browse all quick answers →</a>`;
+
+  syncAnno();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function showHub(keepScroll){
+  document.getElementById("detailView").classList.add("hidden");
+  document.getElementById("hubView").classList.remove("hidden");
+  if(!keepScroll) window.scrollTo({top:0,behavior:"instant"});
+}
+
+function syncAnno(){
+  const on = document.body.classList.contains("show-anno");
+  document.querySelectorAll(".anno-inline").forEach(e => e.style.display = on ? "inline-flex" : "none");
+}
+
+document.getElementById("annoBtn").onclick = function(){
+  document.body.classList.toggle("show-anno");
+  const on = document.body.classList.contains("show-anno");
+  this.classList.toggle("on", on);
+  this.textContent = "SEO annotations: " + (on ? "ON" : "OFF");
+  syncAnno();
+};
+document.getElementById("homeBtn").onclick = () => showHub();
+
+document.getElementById("statA").textContent = GUIDES.length;
+document.getElementById("statB").textContent = QUICK.length;
+document.getElementById("tierACount").textContent = `${GUIDES.length} in this mock-up`;
+document.getElementById("tierBCount").textContent = `${QUICK.length} in this mock-up`;
+
+renderCatNav();
+renderHub();
+</script>
+</body>
+</html>
