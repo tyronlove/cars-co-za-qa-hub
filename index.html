@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cars.co.za Answers — Q&amp;A Hub Mock-up (v2)</title>
+<title>Cars.co.za Answers — Car buying, finance and ownership advice</title>
 <style>
   :root{
     --brand:#E3242B;
@@ -21,8 +21,6 @@
     --white:#fff;
     --ok:#0F7A52;
     --ok-tint:#E8F5EF;
-    --note:#0E7490;
-    --note-tint:#E6F6F8;
     --radius:14px;
     --shadow:0 1px 2px rgba(15,23,42,.05), 0 8px 24px rgba(15,23,42,.06);
   }
@@ -52,34 +50,6 @@
   .btn-ghost{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-weight:700;font-size:13px;color:var(--ink)}
   .btn-red{background:var(--brand);border:0;border-radius:9px;padding:9px 15px;font-weight:700;font-size:13px;color:#fff}
 
-  /* ---------- annotation system ---------- */
-  .anno{display:none}
-  body.show-anno .anno{display:block}
-  .anno-inline{display:none}
-  .anno{
-    background:var(--note-tint);border:1px dashed #7DD3DF;border-radius:10px;
-    padding:10px 13px;font-size:12.5px;color:#164E63;margin:12px 0;line-height:1.5;
-  }
-  .anno b{color:#0C3B4A}
-  .anno code{background:#fff;border:1px solid #BAE6EE;border-radius:4px;padding:1px 5px;font-size:11.5px}
-  .anno-inline{
-    align-items:center;gap:5px;background:var(--note-tint);border:1px dashed #7DD3DF;
-    color:var(--note);font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;
-    white-space:nowrap;letter-spacing:.2px;
-  }
-  .toggle-bar{position:sticky;top:0;z-index:50;background:#020617;color:#fff;font-size:13px;padding:9px 0}
-  .toggle-bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .toggle-bar .tag{font-weight:700;letter-spacing:.3px}
-  .toggle-bar .tag em{font-style:normal;color:#94A3B8;font-weight:500}
-  .toggle-bar .tag .v{color:#FCA5A5}
-  .switches{display:flex;gap:8px;flex-wrap:wrap}
-  .switch{
-    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;
-    border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:600;transition:.15s;
-  }
-  .switch:hover{background:rgba(255,255,255,.2)}
-  .switch.on{background:#fff;color:var(--ink);border-color:#fff}
-
   /* ---------- hero ---------- */
   .hero{
     background:radial-gradient(900px 380px at 85% 0%,rgba(227,36,43,.32),transparent 60%),linear-gradient(160deg,var(--navy-2) 0%,var(--navy) 100%);
@@ -92,7 +62,7 @@
     margin-top:24px;max-width:640px;background:#fff;border-radius:12px;display:flex;
     align-items:center;padding:6px 6px 6px 16px;box-shadow:0 10px 30px rgba(2,6,23,.35)
   }
-  .searchbox input{flex:1;border:0;outline:0;font-size:15px;padding:11px 0;color:var(--ink)}
+  .searchbox input{flex:1;min-width:0;border:0;outline:0;font-size:15px;padding:11px 0;color:var(--ink)}
   .searchbox button{background:var(--brand);color:#fff;border:0;border-radius:9px;padding:11px 20px;font-weight:700;font-size:14px}
   .stats{display:flex;gap:38px;margin-top:28px;flex-wrap:wrap}
   .stats b{display:block;font-size:24px;letter-spacing:-.5px}
@@ -116,8 +86,8 @@
   .cat-pill.on{background:var(--navy);border-color:var(--navy);color:#fff}
 
   /* ---------- in-depth guide cards ---------- */
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
-  .qcard{
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px}
+  .qcard{display:block;
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;
     display:flex;flex-direction:column;gap:11px;transition:.16s;box-shadow:var(--shadow);cursor:pointer;
     border-top:3px solid var(--brand);
@@ -220,45 +190,13 @@
   .helpbox p{margin:0 0 14px;font-size:13.5px;color:#CBD5E1}
   .helpbox button{width:100%;background:var(--brand);color:#fff;border:0;border-radius:9px;padding:10px;font-weight:700;font-size:13.5px}
 
-  /* ---------- strategy panel ---------- */
-  .strategy{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-top:44px;box-shadow:var(--shadow)}
-  .strategy h2{margin:0 0 6px;font-size:21px;letter-spacing:-.4px}
-  .strategy h3.sub{margin:26px 0 10px;font-size:15px}
-  .strategy .lead{color:var(--ink-2);font-size:14.5px;margin:0 0 22px;max-width:800px}
-  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-bottom:8px}
-  .tier{border:1px solid var(--line);border-radius:12px;padding:18px;background:#FCFDFF}
-  .tier .badge{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;border-radius:6px;padding:3px 8px;display:inline-block;margin-bottom:9px}
-  .tier.a .badge{background:var(--brand-tint);color:var(--brand-dark)}
-  .tier.b .badge{background:var(--ok-tint);color:var(--ok)}
-  .tier h3{margin:0 0 8px;font-size:16px}
-  .tier p{margin:0 0 10px;font-size:13.8px;color:var(--ink-2)}
-  .tier ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
-  .tier li{margin-bottom:5px}
-  .tier code,.strategy td code{font-size:12px;background:var(--line-2);border-radius:4px;padding:1px 5px}
-  table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  table.cmp th{background:var(--navy);color:#fff;text-align:left;padding:10px 14px;font-size:12px;letter-spacing:.3px;text-transform:uppercase}
-  table.cmp td{padding:10px 14px;border-top:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
-  table.cmp td:first-child{font-weight:700;color:var(--ink);width:22%}
-  table.cmp td.old{background:#FFF8F8}
-  table.cmp td.new{background:#F5FBF8}
-  .tests{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-  .test{border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:13.5px;color:var(--ink-2)}
-  .test b{display:block;color:var(--ink);font-size:14px;margin-bottom:4px}
-  .test .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:800;margin-right:6px}
-  .verdict{background:var(--navy-tint);border-radius:12px;padding:20px 22px;font-size:14.5px;color:#1E293B;margin-top:22px}
-  .verdict p{margin:0 0 12px}
-  .verdict p:last-child{margin:0}
-  .verdict b{color:var(--navy)}
-  pre.schema{
-    background:#0F172A;color:#CBD5E1;border-radius:10px;padding:16px 18px;overflow:auto;
-    font-size:12px;line-height:1.6;margin:10px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace
-  }
-  pre.schema .k{color:#7DD3FC}
-  pre.schema .s{color:#86EFAC}
-
   footer{background:var(--navy);color:#94A3B8;font-size:12.5px;padding:26px 0}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
+  .back-link{display:inline-block;margin-top:20px;color:var(--brand);font-weight:600;font-size:14px}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-offset:4px}
+  .detail>div{min-width:0}
+  .body table{display:block;overflow-x:auto}
   .hidden{display:none !important}
   @media (max-width:900px){
     .detail{grid-template-columns:1fr}
@@ -272,17 +210,7 @@
   }
 </style>
 </head>
-<body class="show-anno">
-
-<div class="toggle-bar">
-  <div class="wrap">
-    <div class="tag">Q&amp;A HUB MOCK-UP <span class="v">v2</span> <em>— cars.co.za · In-depth guides + Quick answers</em></div>
-    <div class="switches">
-      <button class="switch on" id="annoBtn">SEO annotations: ON</button>
-      <button class="switch" id="homeBtn">← Back to hub</button>
-    </div>
-  </div>
-</div>
+<body>
 
 <div class="topbar">
   <div class="wrap">
@@ -309,135 +237,45 @@
       <div class="eyebrow">CARS.CO.ZA ANSWERS</div>
       <h1>Straight answers to South Africa's car questions.</h1>
       <p>Buying, financing, insuring, selling and running a car — answered by the Cars.co.za team, with the cars that fit the answer right next to it.</p>
-      <div class="searchbox">
-        <input placeholder="Ask a question — e.g. “how much deposit do I need for car finance?”">
-        <button>Search</button>
-      </div>
+      <form class="searchbox" id="searchForm" role="search">
+        <input id="searchInput" type="search" aria-label="Search guides and quick answers" placeholder="Ask a question — e.g. “how much deposit do I need for car finance?”">
+        <button type="submit">Search</button>
+      </form>
+      <p id="searchStatus" role="status" style="font-size:13px;margin-top:12px"></p>
       <div class="stats">
         <div><b id="statA">8</b><span>in-depth guides</span></div>
         <div><b id="statB">20</b><span>quick answers</span></div>
-        <div><b>7</b><span>topic clusters</span></div>
+        <div><b>7</b><span>topics</span></div>
       </div>
     </div>
   </section>
 
   <main>
     <div class="wrap">
-      <div class="anno" style="margin-top:20px">
-        <b>What changed from v1:</b> the first Cars.co.za mock-up gave every one of the 640+ questions its own URL. That produced hundreds of two-to-four-sentence pages competing with each other for the same queries.
-        v2 splits the inventory in two. <b>In-depth guides</b> get their own URL and are built to rank. <b>Quick answers</b> live as passages on the hub, so Google's passage ranking can surface them without a page of their own.
-      </div>
-      <div class="anno">
-        <b>Hub URL:</b> <code>/answers/</code>, with one cluster hub per pill below (<code>/answers/buying-finance/</code>, <code>/answers/selling/</code>…). At 640+ questions, quick answers belong on their <i>cluster</i> hub, not all on one page: roughly 40–90 per cluster keeps each page on one topic, which is what passage ranking rewards.
-        <b>Schema:</b> <code>CollectionPage</code> + <code>ItemList</code> of the guides, <code>FAQPage</code> for the quick answers, <code>BreadcrumbList</code>.
-      </div>
 
-      <div class="cat-nav" id="catNav"></div>
+
+      <nav class="cat-nav" id="catNav" aria-label="Browse answer topics"></nav>
 
       <!-- In-depth guides -->
       <div class="section-head">
         <h2>In-depth guides</h2>
         <span class="count" id="countA"></span>
-        <span class="anno-inline">OWN URL · BUILT TO RANK</span>
+        
       </div>
       <div class="rule"></div>
-      <div class="anno">
-        <b>Why these get their own page:</b> each passes all three tests in the structure recommendation below. Each has search demand of its own, needs a multi-section answer, and has a car shelf that can be filtered to match the answer (first cars under R220 000, hybrids, double-cab bakkies).
-        A dedicated URL gives each one a target for internal links and backlinks, its own Search Console line, and a title tag written for its query.
-      </div>
+      
       <div class="cards" id="cardsA"></div>
 
       <!-- Quick answers -->
       <div class="section-head">
         <h2>Quick answers</h2>
         <span class="count" id="countB"></span>
-        <span class="anno-inline">NO OWN URL · PASSAGE TARGETS</span>
+        
       </div>
       <div class="rule"></div>
-      <div class="anno">
-        <b>Why these do NOT get their own page:</b> each is a short factual answer with no inventory to sell against it. On its own URL it would be a thin page.
-        Here, every question is a real <code>&lt;h3&gt;</code> with its answer in the initial HTML, and the first sentence answers the question outright. That gives Google a clean passage to rank and to quote in a featured snippet or AI Overview, while the reader gets the answer with no click.
-        Where a quick answer has a bigger sibling, it links down to that guide. This is how the hub passes authority to the pages built to rank.
-      </div>
+      
       <div class="faq" id="faqB"></div>
 
-      <!-- Strategy -->
-      <section class="strategy">
-        <h2>Structure recommendation</h2>
-        <p class="lead">Use two tiers. Questions with commercial intent and room for a full answer get a guide that ranks in its own right. Everything else becomes a quick answer, and passage ranking does the work a separate URL used to do.</p>
-
-        <div class="tiers">
-          <div class="tier a">
-            <span class="badge">In-depth guide · own URL</span>
-            <h3 id="tierACount">8 in this mock-up</h3>
-            <p>High-consideration questions that need a long answer <em>and</em> lead straight to stock, finance or Sell my Car.</p>
-            <ul>
-              <li>URL nested under its cluster: <code>/answers/buying-finance/car-finance-deposit/</code></li>
-              <li>Quick-answer block at the top (40–60 words) as the snippet target</li>
-              <li>Car shelf filtered to the answer, from live stock</li>
-              <li>Related guides for internal link equity</li>
-              <li>Tracked on its own in Search Console</li>
-            </ul>
-          </div>
-          <div class="tier b">
-            <span class="badge">Quick answer · cluster hub passage</span>
-            <h3 id="tierBCount">20 in this mock-up</h3>
-            <p>Short factual answers with no inventory tie-in, grouped on the cluster hub so nobody clicks through for two sentences.</p>
-            <ul>
-              <li>No URL of its own; a stable anchor like <code>/answers/selling/#roadworthy-certificate</code></li>
-              <li>Question as <code>&lt;h3&gt;</code>, direct answer as its first sentence</li>
-              <li>Answer text in the initial HTML, not loaded on click</li>
-              <li>Links down to its guide where one exists</li>
-              <li>Adds depth to the cluster hub instead of splitting its authority</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3 class="sub">Three tests that decide the tier</h3>
-        <div class="tests">
-          <div class="test"><b><span class="n">1</span>Does the query have demand of its own?</b>If people search the question as a head or mid-tail term (“balloon payment”), it can carry a title tag and a URL. If it's a long-tail variant, it's a passage.</div>
-          <div class="test"><b><span class="n">2</span>Does the answer need sections?</b>A comparison table, a worked example, or a “when to / when not to” split means a guide. If the full answer fits in about 80 words, it's a quick answer.</div>
-          <div class="test"><b><span class="n">3</span>Is there a shelf to filter?</b>If the answer narrows down which cars to look at, or leads into finance or Sell my Car, the shelf justifies the page. If not, it doesn't.</div>
-        </div>
-        <p style="font-size:13.5px;color:var(--ink-2);margin:12px 0 0">A question needs to pass all three to become a guide. Two of three means it goes on the cluster hub as a quick answer, linked down to the nearest guide.</p>
-
-        <h3 class="sub">v1 vs v2</h3>
-        <table class="cmp">
-          <thead><tr><th></th><th>v1: every question gets a page</th><th>v2: guides + quick answers</th></tr></thead>
-          <tbody>
-            <tr><td>URLs</td><td class="old">640+ question pages</td><td class="new">Guides only; quick answers are anchors on 7–9 cluster hubs</td></tr>
-            <tr><td>Thin content</td><td class="old">Hundreds of pages with a two-to-four-sentence answer</td><td class="new">None. Short answers add depth to a page that already has authority</td></tr>
-            <tr><td>Keyword overlap</td><td class="old">“Balloon payment”, “residual value” and “what is a balloon on car finance” each get a page and compete</td><td class="new">One guide owns the topic, with the variants answered as passages that link to it</td></tr>
-            <tr><td>Car shelf</td><td class="old">Generic “linked cars” on every page</td><td class="new">Filtered per guide to match the answer</td></tr>
-            <tr><td>Reader</td><td class="old">Clicks through to read two sentences</td><td class="new">Gets the fact on the hub, clicks only to go deeper</td></tr>
-            <tr><td>Reporting</td><td class="old">640 rows in Search Console, most near zero</td><td class="new">One row per guide plus one per cluster hub, each with enough traffic to read</td></tr>
-          </tbody>
-        </table>
-
-        <div class="verdict">
-          <p><b>What passage ranking does:</b> since 2021 Google can rank a page for a query answered by a single passage, even when the rest of the page covers a broader topic. It is a ranking signal, not a separate index. The <i>cluster hub</i> is what ranks, and a featured snippet can link straight to the passage with a text fragment (<code>#:~:text=</code>).</p>
-          <p><b>What it doesn't do:</b> rescue a weak page. A quick answer only surfaces if its cluster hub is strong in its own right, with an intro, its guides, internal links and a tight topic. Treat the hubs as real pages, not bare lists.</p>
-          <p><b>A caveat on FAQ markup:</b> since August 2023 Google shows FAQ rich results only for well-known government and health sites, so <code>FAQPage</code> won't earn Cars.co.za an expandable result in Google. It's still worth adding: it's cheap, and it labels each question-and-answer pair clearly for Bing and AI answer engines.</p>
-        </div>
-
-        <div class="anno" style="margin-top:20px">
-          <b>Markup on a cluster hub, quick answers only (<code>FAQPage</code>):</b>
-<pre class="schema">{
-  <span class="k">"@context"</span>: <span class="s">"https://schema.org"</span>,
-  <span class="k">"@type"</span>: <span class="s">"FAQPage"</span>,
-  <span class="k">"url"</span>: <span class="s">"https://www.cars.co.za/answers/selling/"</span>,
-  <span class="k">"mainEntity"</span>: [{
-    <span class="k">"@type"</span>: <span class="s">"Question"</span>,
-    <span class="k">"name"</span>: <span class="s">"Do I need a roadworthy certificate to sell my car?"</span>,
-    <span class="k">"acceptedAnswer"</span>: {
-      <span class="k">"@type"</span>: <span class="s">"Answer"</span>,
-      <span class="k">"text"</span>: <span class="s">"Yes. The buyer can't register the car without one..."</span>
-    }
-  }]
-}</pre>
-          Guide pages use <code>Article</code> + <code>BreadcrumbList</code> + an <code>ItemList</code> of <code>Car</code> listings with <code>Offer</code> prices, not <code>FAQPage</code>.
-        </div>
-      </section>
     </div>
   </main>
 </div>
@@ -447,10 +285,11 @@
   <main>
     <div class="wrap">
       <div class="crumbs"><a href="#" onclick="showHub();return false;">Home</a> › <a href="#" onclick="showHub();return false;">Answers</a> › <a href="#" id="dCrumbLink"></a> › <span id="dCrumb"></span></div>
-      <div class="anno"><b>Guide URL:</b> <code id="dUrl"></code> &nbsp;·&nbsp; <b>Schema:</b> <code>Article</code> + <code>BreadcrumbList</code> + <code>ItemList</code> of <code>Car</code> offers on the shelf. Title tag and H1 match the query this page is built to rank for.</div>
+      
+      <a class="back-link" href="#" onclick="showHub();return false;">← Back to answers</a>
       <div class="detail">
         <div>
-          <h1 id="dTitle"></h1>
+          <h1 id="dTitle" tabindex="-1"></h1>
           <div class="byline">
             <span>Cars.co.za Editorial Team</span><span class="dot"></span>
             <span>Updated October 2026</span><span class="dot"></span>
@@ -461,10 +300,6 @@
             <div class="lbl">Quick answer</div>
             <p id="dQuick"></p>
           </div>
-          <div class="anno">
-            <b>The guide's own passage target.</b> 40–60 words that answer the H1 directly, above the fold and before any preamble.
-            It's what Google lifts for a featured snippet and what an AI Overview quotes, so it has to make sense on its own. Below it, the guide earns its ranking with depth the quick answers on the hub don't have.
-          </div>
 
           <div class="body" id="dBody"></div>
 
@@ -473,17 +308,14 @@
               <h2 id="dShelfTitle"></h2>
               <span class="sub" id="dShelfSub"></span>
             </div>
-            <div class="anno">
-              <b>This shelf is why the question earns a page of its own.</b> It's a live stock query filtered to match <i>this</i> answer, not a generic “linked cars” block.
-              A row in a quick-answers list can't carry its own shelf without the hub turning into noise.
-            </div>
+            
             <div id="dShelf"></div>
           </div>
 
           <div class="module">
             <div class="module-head">
               <h2>Related guides</h2>
-              <span class="sub">Keeps readers in the hub and passes internal link equity between guides</span>
+
             </div>
             <div class="rq" id="dRelated"></div>
           </div>
@@ -498,7 +330,7 @@
           <div class="box">
             <h4>Quick answers in this topic</h4>
             <div class="toc" id="dQuickLinks"></div>
-            <div class="anno" style="margin:10px 0 0">These link to <i>anchors</i> on the cluster hub, not to pages. The link opens the answer in place.</div>
+            
           </div>
         </aside>
       </div>
@@ -508,8 +340,8 @@
 
 <footer>
   <div class="wrap">
-    <div>Cars.co.za Answers: structural mock-up (v2) for content-strategy illustration. Not affiliated with Cars.co.za. Car listings and prices are illustrative.</div>
-    <div>Generated 11 Oct 2026</div>
+    <div>Cars.co.za Answers</div>
+    <div>Buying, financing and owning a car, made simpler.</div>
   </div>
 </footer>
 
@@ -541,7 +373,7 @@ const SLUG = {
   "Insurance & Licensing":"insurance-licensing","Maintenance":"maintenance","EVs & Hybrids":"evs-hybrids","Jargon & Paperwork":"jargon-paperwork"
 };
 
-/* ---- In-depth guides: own URL ---- */
+/* ---- In-depth guides ---- */
 const GUIDES = [
   {
     id:"finance-deposit",
@@ -808,7 +640,7 @@ const GUIDES = [
   }
 ];
 
-/* ---- Quick answers: passages on the cluster hub, no URL of their own ---- */
+/* ---- Quick answers ---- */
 const QUICK = [
   {cat:"Buying & Finance", id:"finance-term", q:"How long can a car finance term be?",
    a:["Most South African banks finance cars over 12 to 72 months. A longer term lowers the instalment but raises the total interest, and increases the chance you'll owe more than the car is worth for longer. Keep the term as short as your budget allows."],
@@ -869,18 +701,20 @@ const QUICK = [
 
 /* ============================ RENDER ============================ */
 let activeCat = "All";
+let searchTerm = "";
+const searchable = value => JSON.stringify(value).toLowerCase();
+const matchesSearch = value => searchTerm.toLowerCase().split(/\s+/).filter(Boolean).every(word => searchable(value).includes(word));
 const byId = id => GUIDES.find(g => g.id === id);
-const urlOf = g => `/answers/${SLUG[g.cat]}/${g.slug}/`;
 const esc = s => s.replace(/"/g,"&quot;");
 
 function carCard(key){
   const c = CARS[key];
   return `<div class="car">
-    <div class="thumb">CAR PHOTO</div>
+    <div class="thumb" aria-hidden="true"><svg width="96" height="48" viewBox="0 0 96 48" fill="none"><path d="M12 30l6-15a5 5 0 0 1 5-3h45a5 5 0 0 1 5 3l8 15M9 30h75v10H9V30Zm10 0h52" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="25" cy="40" r="5" fill="currentColor"/><circle cx="69" cy="40" r="5" fill="currentColor"/></svg></div>
     <div class="in">
       <div class="name">${c.name}</div>
       <div class="meta">${c.km} · ${c.loc}</div>
-      <span class="src anno-inline" style="display:none">illustrative listing</span>
+      
       <div class="price">${c.price}</div>
       <button class="cta">View car</button>
     </div>
@@ -889,45 +723,44 @@ function carCard(key){
 
 function renderCatNav(){
   document.getElementById("catNav").innerHTML = CATS.map(c =>
-    `<button class="cat-pill ${c===activeCat?"on":""}" data-cat="${esc(c)}">${c}</button>`).join("");
+    `<button class="cat-pill ${c===activeCat?"on":""}" aria-pressed="${c===activeCat}" data-cat="${esc(c)}">${c}</button>`).join("");
   document.querySelectorAll(".cat-pill").forEach(b =>
     b.onclick = () => { activeCat = b.dataset.cat; renderCatNav(); renderHub(); });
 }
 
 function renderHub(){
-  const a = GUIDES.filter(q => activeCat==="All" || q.cat===activeCat);
-  const b = QUICK.filter(q => activeCat==="All" || q.cat===activeCat);
-  const where = activeCat==="All" ? "/answers/" : `/answers/${SLUG[activeCat]}/`;
+  const a = GUIDES.filter(q => (activeCat==="All" || q.cat===activeCat) && matchesSearch([q.q, q.teaser, q.quick, q.cat]));
+  const b = QUICK.filter(q => (activeCat==="All" || q.cat===activeCat) && matchesSearch([q.q, q.a, q.cat]));
 
-  document.getElementById("countA").textContent = `${a.length} guide${a.length!==1?"s":""} · own URL each`;
-  document.getElementById("countB").textContent = `${b.length} answer${b.length!==1?"s":""} · on ${where}`;
+  document.getElementById("countA").textContent = `${a.length} guide${a.length!==1?"s":""}`;
+  document.getElementById("countB").textContent = `${b.length} answer${b.length!==1?"s":""}`;
+  document.getElementById("searchStatus").textContent = searchTerm ? `${a.length + b.length} results for “${searchTerm}”` : "";
 
   document.getElementById("cardsA").innerHTML = a.length ? a.map(q => `
-    <div class="qcard" onclick="showDetail('${q.id}')">
-      <div class="chips"><span class="chip cat">${q.cat}</span>${q.shelf.type==="cars"?`<span class="chip stock">Matched car shelf</span>`:`<span class="chip stock">Instant offer</span>`}<span class="chip">${q.read}</span></div>
+    <a class="qcard" href="#" onclick="showDetail('${q.id}');return false;">
+      <div class="chips"><span class="chip cat">${q.cat}</span><span class="chip">${q.read}</span></div>
       <h3>${q.q}</h3>
       <p>${q.teaser}</p>
       <div class="foot">
-        <span class="anno-inline">${urlOf(q)}</span>
+        
         <span class="go">Read the guide →</span>
       </div>
-    </div>`).join("") : `<p style="color:var(--muted)">No in-depth guides in this topic yet.</p>`;
+    </a>`).join("") : `<p style="color:var(--muted)">No guides match your selection. Try another topic or search.</p>`;
 
   document.getElementById("faqB").innerHTML = b.length ? b.map(q => {
     const g = q.deep && byId(q.deep);
     return `
     <div class="faq-item" id="${q.id}">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="answer-${q.id}">
         <span><h3>${q.q}</h3>${activeCat==="All"?`<span class="meta">${q.cat.toUpperCase()}</span>`:""}</span><span class="ic">+</span>
       </button>
-      <div class="faq-a">
+      <div class="faq-a" id="answer-${q.id}">
         ${q.a.map(p=>`<p>${p}</p>`).join("")}
         ${g?`<a class="deep" href="#" onclick="showDetail('${g.id}');return false;">In-depth: ${g.q} →</a>`:""}
-        <div class="anno" style="margin-top:12px">Anchor only: <code>/answers/${SLUG[q.cat]}/#${q.id}</code>. No URL of its own and no car shelf. Included in the cluster hub's <code>FAQPage</code> markup${g?`, and links down to <code>${urlOf(g)}</code>`:""}.</div>
+        
       </div>
-    </div>`;}).join("") : `<p style="padding:18px;color:var(--muted)">No quick answers in this topic yet.</p>`;
+    </div>`;}).join("") : `<p style="padding:18px;color:var(--muted)">No quick answers match your selection. Try another topic or search.</p>`;
 
-  syncAnno();
 }
 
 function toggleFaq(btn){
@@ -939,9 +772,12 @@ function toggleFaq(btn){
 function openQuick(id){
   const q = QUICK.find(x => x.id === id);
   if(!q) return;
+  searchTerm = ""; document.getElementById("searchInput").value = "";
   activeCat = q.cat; renderCatNav(); renderHub(); showHub(true);
   const el = document.getElementById(id);
   el.classList.add("open","flash");
+  el.querySelector(".faq-q").setAttribute("aria-expanded", "true");
+  el.querySelector(".faq-q").focus({preventScroll:true});
   el.scrollIntoView({behavior:"smooth",block:"center"});
 }
 
@@ -955,8 +791,9 @@ function showDetail(id){
   crumbLink.textContent = q.cat;
   crumbLink.onclick = () => { activeCat = q.cat; renderCatNav(); renderHub(); showHub(); return false; };
   document.getElementById("dCrumb").textContent = q.q;
-  document.getElementById("dUrl").textContent = urlOf(q);
   document.getElementById("dTitle").textContent = q.q;
+  document.title = q.q + " | Cars.co.za Answers";
+  document.getElementById("dTitle").focus({preventScroll:true});
   document.getElementById("dRead").textContent = q.read;
   document.getElementById("dQuick").textContent = q.quick;
 
@@ -975,7 +812,7 @@ function showDetail(id){
     document.getElementById("dShelf").innerHTML = `<div class="cars">${sh.cars.map(carCard).join("")}</div>`;
   } else {
     document.getElementById("dShelfTitle").textContent = "Selling? Start here";
-    document.getElementById("dShelfSub").textContent = "This guide's shelf is a tool, not stock";
+    document.getElementById("dShelfSub").textContent = "Get an offer from a verified dealer";
     document.getElementById("dShelf").innerHTML = `<div class="tool">
       <div><h3>${sh.h}</h3><p>${sh.p}</p><div class="fields">${sh.fields.map(f=>`<span>${f}</span>`).join("")}</div></div>
       <button class="btn-red" style="padding:12px 20px;font-size:14px">${sh.b}</button>
@@ -997,34 +834,28 @@ function showDetail(id){
     ? qs.map(t=>`<a href="#" onclick="openQuick('${t.id}');return false;">${t.q}</a>`).join("")
     : `<a href="#" onclick="showHub();return false;">Browse all quick answers →</a>`;
 
-  syncAnno();
   window.scrollTo({top:0,behavior:"instant"});
 }
 
 function showHub(keepScroll){
+  document.title = "Cars.co.za Answers — Car buying, finance and ownership advice";
   document.getElementById("detailView").classList.add("hidden");
   document.getElementById("hubView").classList.remove("hidden");
   if(!keepScroll) window.scrollTo({top:0,behavior:"instant"});
 }
 
-function syncAnno(){
-  const on = document.body.classList.contains("show-anno");
-  document.querySelectorAll(".anno-inline").forEach(e => e.style.display = on ? "inline-flex" : "none");
-}
-
-document.getElementById("annoBtn").onclick = function(){
-  document.body.classList.toggle("show-anno");
-  const on = document.body.classList.contains("show-anno");
-  this.classList.toggle("on", on);
-  this.textContent = "SEO annotations: " + (on ? "ON" : "OFF");
-  syncAnno();
-};
-document.getElementById("homeBtn").onclick = () => showHub();
+document.getElementById("searchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  searchTerm = document.getElementById("searchInput").value.trim();
+  renderHub();
+});
+document.getElementById("searchInput").addEventListener("input", event => {
+  searchTerm = event.target.value.trim();
+  renderHub();
+});
 
 document.getElementById("statA").textContent = GUIDES.length;
 document.getElementById("statB").textContent = QUICK.length;
-document.getElementById("tierACount").textContent = `${GUIDES.length} in this mock-up`;
-document.getElementById("tierBCount").textContent = `${QUICK.length} in this mock-up`;
 
 renderCatNav();
 renderHub();
